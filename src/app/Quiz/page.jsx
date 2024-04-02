@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { Chart } from "chart.js";
 
 const trivia = {
   totalPreguntas: 5,
@@ -87,6 +88,7 @@ const Quiz = () => {
 
   const { preguntas } = trivia;
   const { pregunta, respuestas, respuestaCorrecta } = preguntas[preguntaActiva];
+  const chartRef = useRef(null); // Referencia al gráfico
 
   //   Respuesta seleccionada y checkeada
   const onRespuestaSeleccionada = (respuesta, idx) => {
@@ -125,8 +127,57 @@ const Quiz = () => {
     setChecked(false);
   };
 
+  const updateChart = () => {
+    if (chartRef.current) {
+      chartRef.current.data.datasets[0].data = [
+        resultado.respuestasCorrectas,
+        resultado.respuestasIncorrectas,
+      ];
+      chartRef.current.update();
+    }
+  };
+
+  useEffect(() => {
+    const chartElement = document.getElementById("myChart");
+    if (chartElement) {
+      var ctx = chartElement.getContext("2d");
+      chartRef.current = new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          labels: ["Correctas", "Incorrectas"],  
+          datasets: [
+            {
+              data: [resultado.respuestasCorrectas, resultado.respuestasIncorrectas],
+              borderColor: ["rgb(75, 192, 192)", "rgb(255, 99, 132)"],
+              backgroundColor: ["rgb(75, 192, 192 )", "rgb(255, 99, 132)"],
+              borderWidth: 2,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            xAxes: [{ display: false }],
+            yAxes: [{ display: false }],
+          },
+        },
+      });
+    }
+
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+      }
+    };
+  }, [resultado]);
+
+  // Dependencia vacía para que se ejecute solo una vez
+
+  useEffect(() => {
+    updateChart();
+  }, [resultado]); // Se ejecuta cada vez que cambia el resultado
+
   return (
-    <div className="flex justify-center items-center min-h-screen p-5 ">
+    <div className="flex flex-col justify-center items-center min-h-screen p-5 ">
       <div>
         <div className="py-5">
           <h1 className="font-bold text-5xl text-center">Trivia Malbec</h1>
@@ -180,6 +231,7 @@ const Quiz = () => {
             </div>
           ) : (
             <div className="bg-white text-black p-5 text-xl">
+<<<<<<< HEAD
               <h3 className="text-2xl font-bold">Resultados:</h3>
 
 
@@ -213,6 +265,51 @@ const Quiz = () => {
               <button className="btn" onClick={() => window.location.reload()}>
                 Reiniciar
               </button>
+=======
+              <div>
+                <div className="flex mx-auto my-auto">
+                  <div className="border border-gray-400 pt-0 rounded-xl w-full h-fit my-auto  shadow-xl pb-2">
+                    <canvas id="myChart"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 className="text-2xl font-bold">Resultados:</h3>
+                <h3 className="p-2">
+                  Nota:{" "}
+                  <span className="text-sky-400">
+                    {(resultado.puntaje / 25) * 100}/100
+                  </span>
+                </h3>
+                <p className="p-2">
+                  Preguntas:{" "}
+                  <span className="text-sky-400">{preguntas.length}</span>
+                </p>
+                <p className="p-2">
+                  Puntaje:{" "}
+                  <span className="text-sky-400">{resultado.puntaje}</span>
+                </p>
+                <p className="p-2">
+                  Respuestas Correctas:{" "}
+                  <span className="text-green-400">
+                    {resultado.respuestasCorrectas}
+                  </span>
+                </p>
+                <p className="p-2">
+                  Respuestas Incorrectas:{" "}
+                  <span className="text-red-400">
+                    {resultado.respuestasIncorrectas}
+                  </span>
+                </p>
+                <button
+                  className="btn"
+                  onClick={() => window.location.reload()}
+                >
+                  Reiniciar
+                </button>
+              </div>
+>>>>>>> 93d0dd3ce894fc2e39c28b5a668869a3bc7d2963
             </div>
           )}
         </div>
