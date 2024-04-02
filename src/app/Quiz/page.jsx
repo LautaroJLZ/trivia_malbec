@@ -45,20 +45,45 @@ const trivia = {
 const Quiz = () => {
   const [preguntaActiva, setPreguntaActiva] = useState(0);
 
-  const [respuestaSeleccionada, setRespuestaSeleccionada] = useState("");
-
   const [checked, setChecked] = useState(false);
 
-  const [respuestaSeleccionadaIndex, setRespuestaSeleccionadaIndex] =
-    useState(null);
+  const [respuestaSeleccionadaIndex, setRespuestaSeleccionadaIndex] = useState(null);
+  const [respuestaSeleccionada, setRespuestaSeleccionada] = useState("");
 
-  const [mostrarResultado, setMostrarResultado] = useState(false);
+  const mostrarGrafico = (contenedor) => {
+    var ctx = document.createElement("canvas");
+    ctx.style.width = "40%"; // Establecer el ancho al 40%
+    ctx.style.margin = "auto"; // Centrar horizontalmente
+    contenedor.appendChild(ctx);
+
+    var myChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+          // labels: ['Correctas', 'Incorrectas'],
+          datasets: [{
+              label: 'Resultados',
+              data: [resultado.respuestasCorrectas, resultado.respuestasIncorrectas],
+              backgroundColor: [
+                  'rgba(75, 192, 192, 0.2)',
+                  'rgba(255, 99, 132, 0.2)'
+              ],
+              borderColor: [
+                  'rgba(75, 192, 192, 1)',
+                  'rgba(255, 99, 132, 1)'
+              ],
+              borderWidth: 1
+          }]
+      },
+    });
+  };
 
   const [resultado, setResultado] = useState({
     puntaje: 0,
     respuestasCorrectas: 0,
     respuestasIncorrectas: 0,
   });
+
+  const [mostrarResultado, setMostrarResultado] = useState(false);
 
   const { preguntas } = trivia;
   const { pregunta, respuestas, respuestaCorrecta } = preguntas[preguntaActiva];
@@ -77,13 +102,12 @@ const Quiz = () => {
   };
 
   //   Calcula el puntaje y cambia a la siguiente pregunta
-
   const siguientePregunta = () => {
     setRespuestaSeleccionadaIndex(null);
-    setResultado((prev) =>
+    setResultado((prev) => // Define prev en 0 cada vez que se use
       respuestaSeleccionada
         ? {
-            ...prev,
+            ...prev, // Setea prev con los datos previos de resultado
             puntaje: prev.puntaje + 5,
             respuestasCorrectas: prev.respuestasCorrectas + 1,
           }
@@ -157,6 +181,9 @@ const Quiz = () => {
           ) : (
             <div className="bg-white text-black p-5 text-xl">
               <h3 className="text-2xl font-bold">Resultados:</h3>
+
+
+
               <h3 className="p-2">
                 Nota:{" "}
                 <span className="text-sky-400">
