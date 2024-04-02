@@ -12,11 +12,12 @@ body {
     list-none
     p-2
     my-3
-    border
-    border-gray-600
+    border-2
+    border-white
     cursor-pointer
-    bg-black
+    text-xl
     text-white
+    rounded-full
     transition-all duration-300
     text-center
 }
@@ -25,11 +26,15 @@ body {
     list-none
     p-2
     my-3
-    border
-    border-gray-600
+    border-2
+    border-white
     cursor-pointer
-    hover:bg-black
+    hover:bg-transparent
     hover:text-white
+    bg-white
+    text-xl
+    text-red-700
+    rounded-full
     transition-all duration-300
     text-center
 }
@@ -38,13 +43,13 @@ body {
     bg-black
     text-white 
     p-5 
-    rounded-md 
+    rounded-full
     text-center 
     my-4 
     text-2xl 
     font-bold 
-    hover:bg-gray-300
-    hover:text-black 
+    hover:bg-red-500
+    hover:text-white
     transition-all duration-300
     w-full
     cursor-pointer
@@ -54,13 +59,13 @@ body {
     bg-black
     text-white 
     p-5 
-    rounded-md 
+    rounded-full
     text-center 
     my-4 
     text-2xl 
     font-bold 
-    hover:bg-gray-300
-    hover:text-black 
+    hover:bg-red-500
+    hover:text-white
     transition-all duration-300
     w-full
 }
