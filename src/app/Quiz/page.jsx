@@ -2,6 +2,10 @@
 import { useState, useEffect, useRef } from "react";
 import { Chart } from "chart.js";
 
+import localFont from "next/font/local";
+const fontSerif = localFont({ src: "../../fonts/NotoSerifTangut.ttf" });
+const fontSageffine = localFont({ src: "../../fonts/Sageffine.otf" });
+
 const trivia = {
   totalPreguntas: 5,
   preguntas: [
@@ -152,82 +156,95 @@ const Quiz = () => {
 
   return (
     <div className="bg-[url('../views/img/bg_uvas_rojo.jpg')] justify-center items-center min-h-screen p-5 ">
-      <div className="absolute top-0 right-0 m-7 text-2xl">
-        Trivia <span className="bg-white text-red-700 rounded-md p-2">Malbec</span>
+      <div className={fontSageffine.className}>
+        <div className="absolute top-0 right-0 m-7 text-4xl">
+          Trivia <span className="bg-white text-red-900 rounded-md p-2">Malbec</span>
+        </div>
       </div>
       <div>
         <div className="">
           {!mostrarResultado ? (
-            <div className="w-[55%] text-white mx-auto my-5 p-5">
+            <div className="w-[100%] md:w-[70%] lg:w-[50%] text-white mt-14 mx-auto p-5">
               {/* <h2 className="font-bold text-2xl">
                 Preguntas: {preguntaActiva + 1}{" "}
                 <span>/ {preguntas.length}</span>
               </h2> */}
-              <h2 className="w-fit bg-white text-red-700 rounded-full text-lg py-2 px-10">
-                {preguntaActiva + 1}{"º Pregunta"}
-              </h2>
-              <div className="w-[70%]">
-                <h3 className="text-white font-bold text-5xl p-3">
-                  {preguntas[preguntaActiva].pregunta}
-                </h3>
+              <div className={fontSerif.className}>
+                <h2 className="w-fit bg-white text-red-900 rounded-full font-bold text-xl py-2 px-10 my-2">
+                  {preguntaActiva + 1}{"º Pregunta"}
+                </h2>
               </div>
-              {respuestas.map((respuesta, idx) => (
-                <li
-                  key={idx}
-                  onClick={() => onRespuestaSeleccionada(respuesta, idx)}
-                  className={
-                    respuestaSeleccionadaIndex === idx
-                      ? "li-selected"
-                      : "li-hover"
-                  }
-                >
-                  <span>{respuesta}</span>
-                </li>
-              ))}
-              {checked ? (
-                <div className="w-full">
-                  <button onClick={siguientePregunta} className="btn">
-                    {preguntaActiva === pregunta.length - 1
-                      ? "Finalizar"
-                      : "Siguiente"}
-                  </button>
+              <div className="w-[80%] md:w-[70%] lg:w-[80%]">
+                <div className={fontSageffine.className}>
+                  <h3 className="text-white text-4xl md:text-5xl lg:text-7xl p-3">
+                    {preguntas[preguntaActiva].pregunta}
+                  </h3>
                 </div>
-              ) : (
-                <div className="w-full">
-                  <button
-                    onClick={siguientePregunta}
-                    disabled
-                    className="btn-disabled"
+              </div>
+              <div className={fontSerif.className}>
+                {respuestas.map((respuesta, idx) => (
+                  <li
+                    key={idx}
+                    onClick={() => onRespuestaSeleccionada(respuesta, idx)}
+                    className={
+                      respuestaSeleccionadaIndex === idx
+                        ? "li-selected"
+                        : "li-hover"
+                    }
                   >
-                    {" "}
-                    {preguntaActiva === pregunta.length - 1
-                      ? "Finalizar"
-                      : "Siguiente"}
-                  </button>
+                    <span>{respuesta}</span>
+                  </li>
+                ))}
+                {checked ? (
+                  <div className="w-full">
+                    <button onClick={siguientePregunta} className="btn shadow-glow">
+                      {preguntaActiva === pregunta.length - 1
+                        ? "Finalizar"
+                        : "Siguiente"}
+                    </button>
+                  </div>
+                ) : (
+                  <div className="w-full">
+                    <button
+                      onClick={siguientePregunta}
+                      disabled
+                      className="btn-disabled shadow-glow"
+                    >
+                      {" "}
+                      {preguntaActiva === pregunta.length - 1
+                        ? "Finalizar"
+                        : "Siguiente"}
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div className={fontSageffine.className}>
+                <div className="text-center">
+                  <span className="text-4xl">Seleccione su respuesta<br></br>pulsando el cuadrado</span>
                 </div>
-              )}
+              </div>
             </div>
           ) : (
-            <div className="w-[35%] backdrop-blur-sm bg-white/[.06] text-white p-5 text-xl border border-white rounded-lg mx-auto">
+            <div className="w-[100%] md:w-[70%] lg:w-[35%] backdrop-blur-sm bg-white/[.06] text-white p-5 text-xl border border-white rounded-lg mt-20 mx-auto">
               <div>
-                <div className="flex mx-auto my-auto">
+                <div className="flex mx-auto mt-4">
                   <div className="pt-0 w-full h-fit mb-6">
                     <canvas id="myChart"></canvas>
                   </div>
                 </div>
               </div>
 
-              <div>
-                <h3 className="text-2xl font-bold">Resultados:</h3>
+              <div className={fontSerif.className}>
+                <h3 className="text-2xl font-bold pl-2">Resultados:</h3>
                 <p className="p-2">
                   Respuestas Correctas:{" "}
-                  <span className="text-green-400">
+                  <span className="text-green-500">
                     {resultado.respuestasCorrectas}
                   </span>
                 </p>
                 <p className="p-2">
                   Respuestas Incorrectas:{" "}
-                  <span className="text-red-400">
+                  <span className="text-red-500">
                     {resultado.respuestasIncorrectas}
                   </span>
                 </p>
@@ -247,7 +264,7 @@ const Quiz = () => {
                 </p>
                 
                 <button
-                  className="btn"
+                  className="btn shadow-glow"
                   onClick={() => window.location.reload()}
                 >
                   Reiniciar
