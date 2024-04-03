@@ -1,8 +1,9 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { Chart } from "chart.js";
-
 import localFont from "next/font/local";
+import Link from "next/link";
+
 const fontSerif = localFont({ src: "../../fonts/NotoSerifTangut.ttf" });
 const fontSageffine = localFont({ src: "../../fonts/Sageffine.otf" });
 
@@ -52,7 +53,8 @@ const Quiz = () => {
 
   const [checked, setChecked] = useState(false);
 
-  const [respuestaSeleccionadaIndex, setRespuestaSeleccionadaIndex] = useState(null);
+  const [respuestaSeleccionadaIndex, setRespuestaSeleccionadaIndex] =
+    useState(null);
   const [respuestaSeleccionada, setRespuestaSeleccionada] = useState("");
 
   const [resultado, setResultado] = useState({
@@ -83,17 +85,20 @@ const Quiz = () => {
   //   Calcula el puntaje y cambia a la siguiente pregunta
   const siguientePregunta = () => {
     setRespuestaSeleccionadaIndex(null);
-    setResultado((prev) => // Define prev en 0 cada vez que se use
-      respuestaSeleccionada
-        ? {
-            ...prev, // Setea prev con los datos previos de resultado
-            puntaje: prev.puntaje + 5,
-            respuestasCorrectas: prev.respuestasCorrectas + 1,
-          }
-        : {
-            ...prev,
-            respuestasIncorrectas: prev.respuestasIncorrectas + 1,
-          }
+    setResultado(
+      (
+        prev // Define prev en 0 cada vez que se use
+      ) =>
+        respuestaSeleccionada
+          ? {
+              ...prev, // Setea prev con los datos previos de resultado
+              puntaje: prev.puntaje + 5,
+              respuestasCorrectas: prev.respuestasCorrectas + 1,
+            }
+          : {
+              ...prev,
+              respuestasIncorrectas: prev.respuestasIncorrectas + 1,
+            }
     );
     if (preguntaActiva !== preguntas.length - 1) {
       setPreguntaActiva((prev) => prev + 1);
@@ -124,7 +129,10 @@ const Quiz = () => {
           labels: ["Correctas", "Incorrectas"],
           datasets: [
             {
-              data: [resultado.respuestasCorrectas, resultado.respuestasIncorrectas],
+              data: [
+                resultado.respuestasCorrectas,
+                resultado.respuestasIncorrectas,
+              ],
               borderColor: ["rgb(75, 192, 192)", "rgb(255, 99, 132)"],
               backgroundColor: ["rgb(75, 192, 192 )", "rgb(255, 99, 132)"],
               borderWidth: 2,
@@ -139,14 +147,13 @@ const Quiz = () => {
         },
       });
     }
-  
+
     return () => {
       if (chartRef.current) {
         chartRef.current.destroy();
       }
     };
   }, [resultado]);
-  
 
   // Dependencia vacía para que se ejecute solo una vez
 
@@ -158,7 +165,8 @@ const Quiz = () => {
     <div className="bg-[url('../views/img/bg_uvas_rojo.jpg')] justify-center items-center min-h-screen p-5 ">
       <div className={fontSageffine.className}>
         <div className="absolute top-0 right-0 m-7 text-4xl">
-          Trivia <span className="bg-white text-red-900 rounded-md p-2">Malbec</span>
+          Trivia{" "}
+          <span className="bg-white text-red-900 rounded-md p-2">Malbec</span>
         </div>
       </div>
       <div>
@@ -171,7 +179,8 @@ const Quiz = () => {
               </h2> */}
               <div className={fontSerif.className}>
                 <h2 className="w-fit bg-white text-red-900 rounded-full font-bold text-xl py-2 px-10 my-2">
-                  {preguntaActiva + 1}{"º Pregunta"}
+                  {preguntaActiva + 1}
+                  {"º Pregunta"}
                 </h2>
               </div>
               <div className="w-[80%] md:w-[70%] lg:w-[80%]">
@@ -197,7 +206,10 @@ const Quiz = () => {
                 ))}
                 {checked ? (
                   <div className="w-full">
-                    <button onClick={siguientePregunta} className="btn shadow-glow">
+                    <button
+                      onClick={siguientePregunta}
+                      className="btn shadow-glow"
+                    >
                       {preguntaActiva === pregunta.length - 1
                         ? "Finalizar"
                         : "Siguiente"}
@@ -220,7 +232,9 @@ const Quiz = () => {
               </div>
               <div className={fontSageffine.className}>
                 <div className="text-center">
-                  <span className="text-4xl">Seleccione su respuesta<br></br>pulsando el cuadrado</span>
+                  <span className="text-4xl">
+                    Seleccione su respuesta<br></br>pulsando el cuadrado
+                  </span>
                 </div>
               </div>
             </div>
@@ -262,13 +276,11 @@ const Quiz = () => {
                   Puntaje:{" "}
                   <span className="text-sky-400">{resultado.puntaje}</span>
                 </p>
-                
-                <button
-                  className="btn shadow-glow"
-                  onClick={() => window.location.reload()}
-                >
-                  Reiniciar
-                </button>
+                <div className="btn shadow-glow">
+                  <Link href="/" >
+                    Volver a Jugar
+                  </Link>
+                </div>
               </div>
             </div>
           )}

@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { NavLink } from "react-router-dom";
 
 const Inicio = () => {
     useEffect(() => {
@@ -7,9 +6,8 @@ const Inicio = () => {
     }, []);
     return (
         <div>
-            
         </div>
     );
 };
 
-export { Inicio };
+export default Inicio ;
