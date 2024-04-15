@@ -17,7 +17,8 @@ body {
     cursor-pointer
     text-2xl
     text-white
-    rounded-full
+    rounded-3xl
+    lg:rounded-full
     transition-all duration-300
     text-center
     font-bold
@@ -35,7 +36,8 @@ body {
     bg-white
     text-2xl
     text-red-900
-    rounded-full
+    rounded-3xl
+    lg:rounded-full
     transition-all duration-300
     text-center
     font-bold

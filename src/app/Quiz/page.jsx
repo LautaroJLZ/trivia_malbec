@@ -106,8 +106,7 @@ const Quiz = () => {
 
   const [checked, setChecked] = useState(false);
 
-  const [respuestaSeleccionadaIndex, setRespuestaSeleccionadaIndex] =
-    useState(null);
+  const [respuestaSeleccionadaIndex, setRespuestaSeleccionadaIndex] = useState(null);
   const [respuestaSeleccionada, setRespuestaSeleccionada] = useState("");
 
   const [resultado, setResultado] = useState({
@@ -236,7 +235,7 @@ const Quiz = () => {
                   {"º Pregunta"}
                 </h2>
               </div>
-              <div className="w-[80%] md:w-[70%] lg:w-[80%]">
+              <div className="w-[80%]">
                 <div className={fontSageffine.className}>
                   <h3 className="text-white text-4xl md:text-5xl lg:text-7xl p-3">
                     {preguntas[preguntaActiva].pregunta}
